@@ -1,11 +1,6 @@
 import jsPDF from "jspdf";
 import { ContractData } from "@/types/contract";
 
-function addKoreanText(doc: jsPDF, text: string, x: number, y: number, size = 11) {
-  doc.setFontSize(size);
-  doc.text(text, x, y);
-}
-
 export function downloadContractPdf(data: ContractData) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
 
@@ -14,7 +9,7 @@ export function downloadContractPdf(data: ContractData) {
   doc.text("INUS MUSIC CONTRACT", 105, 18, { align: "center" });
 
   doc.setFontSize(10);
-  doc.text("Korean text may require font setup for production PDF.", 105, 26, { align: "center" });
+  doc.text("Korean text requires font setup for final production PDF.", 105, 26, { align: "center" });
 
   let y = 42;
   const line = (label: string, value: string) => {
@@ -40,13 +35,13 @@ export function downloadContractPdf(data: ContractData) {
   doc.text("Agreement", 20, y);
   y += 8;
   doc.setFontSize(10);
-  const terms = [
+
+  [
     "The contractor confirms that all entered information is true.",
     "The contractor agrees to perform the agreed role at the event.",
     "This test version stores data locally in the browser.",
     "For production use, add DB, OTP, audit log, and Google Drive upload."
-  ];
-  terms.forEach((t) => {
+  ].forEach((t) => {
     doc.text(`- ${t}`, 24, y);
     y += 7;
   });
