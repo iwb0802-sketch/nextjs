@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { getContract } from "@/lib/storage";
 import { downloadContractPdf } from "@/lib/pdf";
 
-export default function CompletePage() {
+function CompleteContent() {
   const params = useSearchParams();
   const id = params.get("id") || "";
   const data = getContract(id);
@@ -46,5 +47,17 @@ export default function CompletePage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function CompletePage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center p-6">
+        <div className="bg-white rounded-2xl shadow p-8">불러오는 중...</div>
+      </main>
+    }>
+      <CompleteContent />
+    </Suspense>
   );
 }
